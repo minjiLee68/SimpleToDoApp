@@ -46,9 +46,12 @@
                                                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="24"/>
                                                     </state>
                                                     <state key="selected" image="checkmark.circle.fill" catalog="system"/>
+                                                    <connections>
+                                                        <action selector="checkButtonTapped:" destination="vkW-s2-cTE" eventType="touchUpInside" id="plN-NI-BRm"/>
+                                                    </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xg2-fi-kkh">
-                                                    <rect key="frame" x="369" y="27.5" width="35" height="35"/>
+                                                    <rect key="frame" x="359" y="27.5" width="35" height="35"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="35" id="RtZ-n3-viK"/>
                                                         <constraint firstAttribute="width" constant="35" id="Y7n-wH-lhb"/>
@@ -58,9 +61,12 @@
                                                     <state key="normal" image="xmark.circle.fill" catalog="system">
                                                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="20"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="deleteButtonTapped:" destination="vkW-s2-cTE" eventType="touchUpInside" id="6PF-7p-caJ"/>
+                                                    </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weekly iOS Metting" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VAl-pc-QQV">
-                                                    <rect key="frame" x="71" y="34.5" width="288" height="21"/>
+                                                    <rect key="frame" x="71" y="34.5" width="278" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -82,17 +88,18 @@
                                                 <constraint firstItem="qEo-f5-6Rb" firstAttribute="centerY" secondItem="5BM-9I-vGg" secondAttribute="centerY" id="Ouj-5T-Bbn"/>
                                                 <constraint firstItem="VAl-pc-QQV" firstAttribute="leading" secondItem="QIj-Vc-uMv" secondAttribute="trailing" constant="16" id="V5Y-J6-wAG"/>
                                                 <constraint firstItem="Xg2-fi-kkh" firstAttribute="centerY" secondItem="5BM-9I-vGg" secondAttribute="centerY" id="YaU-Fg-us5"/>
-                                                <constraint firstAttribute="trailing" secondItem="Xg2-fi-kkh" secondAttribute="trailing" constant="10" id="ign-Ah-Ddx"/>
+                                                <constraint firstAttribute="trailing" secondItem="Xg2-fi-kkh" secondAttribute="trailing" constant="20" id="ign-Ah-Ddx"/>
                                                 <constraint firstItem="QIj-Vc-uMv" firstAttribute="centerY" secondItem="5BM-9I-vGg" secondAttribute="centerY" id="rko-aa-zNU"/>
                                                 <constraint firstItem="VAl-pc-QQV" firstAttribute="centerY" secondItem="5BM-9I-vGg" secondAttribute="centerY" id="xSK-Tg-DrJ"/>
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="414" height="90"/>
                                         <connections>
-                                            <outlet property="deleteButton" destination="Xg2-fi-kkh" id="aew-x3-DKV"/>
-                                            <outlet property="descriptionLabel" destination="VAl-pc-QQV" id="1a0-ml-88B"/>
-                                            <outlet property="strikeThrounghView" destination="qEo-f5-6Rb" id="qFb-c1-GKa"/>
-                                            <outlet property="strikeThrounghWidth" destination="r3O-UP-WHI" id="rgV-Fo-asG"/>
+                                            <outlet property="checkButton" destination="QIj-Vc-uMv" id="5nu-n2-ZAN"/>
+                                            <outlet property="deleteButton" destination="Xg2-fi-kkh" id="YRq-cU-00x"/>
+                                            <outlet property="descriptionLabel" destination="VAl-pc-QQV" id="BBN-1a-Swm"/>
+                                            <outlet property="strikeThroughView" destination="qEo-f5-6Rb" id="8dI-TN-J5Q"/>
+                                            <outlet property="strikeThroughWidth" destination="r3O-UP-WHI" id="Lwd-QG-pYk"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -196,7 +203,6 @@
                     <connections>
                         <outlet property="addButton" destination="Nod-b3-Bga" id="2Nj-tD-bWG"/>
                         <outlet property="collectionView" destination="vst-OR-1h7" id="VoI-NV-J8o"/>
-                        <outlet property="indexField" destination="CDJ-pu-Dm3" id="rTn-rb-c7j"/>
                         <outlet property="inputTextField" destination="CDJ-pu-Dm3" id="UR6-VQ-kxR"/>
                         <outlet property="inputViewBottom" destination="1Jl-8Q-psH" id="FzW-xS-Hju"/>
                         <outlet property="isTodayButton" destination="ud5-Xb-WHP" id="5aX-h2-Xsn"/>

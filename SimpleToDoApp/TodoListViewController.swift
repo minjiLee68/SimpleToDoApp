@@ -72,9 +72,66 @@ extension TodoListViewController: UICollectionViewDataSource {
         todoViewModel.numOfSection
     }
     
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if section == 0 {
+            return todoViewModel.todayTodo.count
+        } else {
+            return todoViewModel.upcomingTodo.count
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        // 섹션 별 아이템 몇개>
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TodoListCell", for: indexPath) as? TodoListCell else {
+            return UICollectionViewCell()
+        }
         
+        var todo: Todo
+        if indexPath.section == 0 {
+            todo = todoViewModel.todayTodo[indexPath.item]
+        } else {
+            todo = todoViewModel.upcomingTodo[indexPath.item]
+        }
+        cell.updateUI(todo: todo)
+        
+        cell.doneButtonTapHandler = { isDone in
+            todo.isDone = isDone
+            self.todoViewModel.updateTodo(todo)
+            self.collectionView.reloadData()
+        }
+        
+        cell.deleteButtonTapHanler = {
+            self.todoViewModel.deleteTodo(todo)
+            self.collectionView.reloadData()
+        }
+        
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        switch kind {
+        case UICollectionView.elementKindSectionHeader:
+            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "TodoListHeadarView", for: indexPath) as? TodoListHeadarView else {
+                return UICollectionReusableView()
+            }
+            
+            guard let section = TodoViewModel.Section(rawValue: indexPath.section) else {
+                return UICollectionReusableView()
+            }
+            
+            header.sectionTitleLabel.text = section.title
+            return header
+            
+        default:
+            return UICollectionReusableView()
+        }
+    }
+}
+
+extension TodoListViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width: CGFloat = collectionView.bounds.width
+        let height: CGFloat = 50
+        return CGSize(width: width, height: height)
     }
 }
 
@@ -82,10 +139,59 @@ class TodoListCell: UICollectionViewCell {
     @IBOutlet weak var checkButton: UIButton!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var deleteButton: UIButton!
-    @IBOutlet weak var strikeThrounghView: UIView!
+    @IBOutlet weak var strikeThroughView: UIView!
     
-    @IBOutlet weak var strikeThrounghWidth: NSLayoutConstraint!
+    @IBOutlet weak var strikeThroughWidth: NSLayoutConstraint!
     
+    var doneButtonTapHandler: ((Bool) -> Void)?
+    var deleteButtonTapHanler: (() -> Void)?
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        reset()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        reset()
+    }
+    
+    func updateUI(todo: Todo) {
+        // [x] TODO: 셀 업데이트 하기
+        checkButton.isSelected = todo.isDone
+        descriptionLabel.text = todo.detail
+        descriptionLabel.alpha = todo.isDone ? 0.2 : 1
+        deleteButton.isHidden = todo.isDone == false
+        showStrikeThrough(todo.isDone)
+    }
+    
+    func showStrikeThrough(_ show: Bool) {
+        if show {
+            strikeThroughWidth.constant = descriptionLabel.bounds.width
+        } else {
+            strikeThroughWidth.constant = 0
+        }
+    }
+    
+    func reset() {
+        descriptionLabel.alpha = 1
+        deleteButton.isHidden = true
+        showStrikeThrough(false)
+    }
+    
+    @IBAction func checkButtonTapped(_ sender: Any) {
+        checkButton.isSelected = !checkButton.isSelected
+        let isDone = checkButton.isSelected
+        showStrikeThrough(isDone)
+        descriptionLabel.alpha = isDone ? 0.2 : 1
+        deleteButton.isHidden = !isDone
+        
+        doneButtonTapHandler?(isDone)
+    }
+    
+    @IBAction func deleteButtonTapped(_ sender: Any) {
+        deleteButtonTapHanler?()
+    }
 }
 
 class TodoListHeadarView: UICollectionReusableView {
